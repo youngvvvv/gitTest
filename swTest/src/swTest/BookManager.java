@@ -18,7 +18,7 @@ public class BookManager {
 
     public boolean removeBook(int id) {
         if (!books.containsKey(id)) {
-            System.out.println("해당 ID(" + id + ")의 도서를 찾을 수 없습니다.");
+            System.out.println("해당 ID(" + id + ")의 도서를 찾을 수 없습니다");
             return false;
         }
         Book removedBook = books.remove(id);
