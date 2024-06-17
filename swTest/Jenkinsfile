@@ -14,7 +14,7 @@ pipeline{
       stage('Build') {
         steps {
           script{
-             def junitClasspath = 'eclipse/plugins/junit-jupiter-api-5.7.1.jar:eclipse/plugins/junit-platform-console-standalone-1.7.1.jar'
+             def junitClasspath = 'eclipse/plugins/junit-jupiter-api-5.7.1.jar:eclipse:plugins/junit-platform-console-standalone-1.7.1.jar'
              sh 'mkdir -p classes'
              sh "javac -encoding UTF-8 -cp ${junitClasspath} -d classes swTest/src/**/*.java"
           }
@@ -25,7 +25,7 @@ pipeline{
         steps {
           script{
            // JUnit 5 테스트 실행
-                    def junitClasspath = 'classes:eclipse/plugins/junit-jupiter-api-5.7.1.jar:eclipse/plugins/junit-platform-console-standalone-1.7.1.jar'
+                    def junitClasspath = 'classes:eclipse/plugins/junit-jupiter-api-5.7.1.jar:eclipse:plugins/junit-platform-console-standalone-1.7.1.jar'
                     sh "java -Dfile.encoding=UTF-8 -cp ${junitClasspath} org.junit.platform.console.ConsoleLauncher --scan-classpath --classpath classes | tee test_results.txt"
 
           }
