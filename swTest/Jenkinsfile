@@ -12,7 +12,7 @@ pipeline{
       stage('Build') {
         steps {
           script{
-            def classpath = "classes:lib/*:[hyoyoung@]jinhyoyeong-ui-MacBookAir /Applications/Eclipse.app/Contents/Eclipse/plugins/junit-platform-console-standalone-1.7.1.jar"
+            def classpath = "classes:lib/*:/Applications/Eclipse.app/Contents/Eclipse/plugins/junit-platform-console-standalone-1.7.1.jar"
             sh "javac -encoding UTF-8 -cp ${classpath} -d classes swTest/src/**/*.java"
           }
         }
@@ -20,7 +20,7 @@ pipeline{
       stage('Test'){
         steps {
           script{
-           def classpath = "classes:lib/*:[hyoyoung@]jinhyoyeong-ui-MacBookAir /Applications/Eclipse.app/Contents/Eclipse/plugins/junit-platform-console-standalone-1.7.1.jar"
+           def classpath = "classes:lib/*:/Applications/Eclipse.app/Contents/Eclipse/plugins/junit-platform-console-standalone-1.7.1.jar"
            sh "java -cp ${classpath} org.junit.platform.console.ConsoleLauncher --scan-classpath > test_results.txt"
           }
         }
