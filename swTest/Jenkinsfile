@@ -12,16 +12,21 @@ pipeline{
       stage('Build') {
         steps {
           script{
-            def classpath = "classes:lib/:/Applications/Eclipse.app/Contents/Eclipse/plugins/junit-jupiter-api_5.10.2.jar"
-            sh "javac -encoding UTF-8 -cp ${classpath} -d classes swTest/src/**/*.java"
+             def junitApiPath = "/Applications/Eclipse.app/Contents/Eclipse/plugins/junit-jupiter-api-5.10.2.jar"
+             def junitConsolePath = "/Applications/Eclipse.app/Contents/Eclipse/plugins/junit-platform-console-standalone-1.7.1.jar"
+             def classpath = "classes:lib/*:${junitApiPath}:${junitConsolePath}"
+             sh "javac -encoding UTF-8 -cp '${classpath}' -d classes swTest/src/swTest/Book.java swTest/src/swTest/BookManager.java swTest/src/swTest/BookManagerTest.java swTest/src/swTest/JunitTest.java swTest/src/swTest/JunitTestTest.java swTest/src/swTest/test.java"
+                }
           }
         }
       }
       stage('Test'){
         steps {
           script{
-           def classpath = "classes:lib/:/Applications/Eclipse.app/Contents/Eclipse/plugins/junit-jupiter-api_5.10.2.jar"
-           sh "java -cp ${classpath} org.junit.platform.console.ConsoleLauncher --scan-classpath > test_results.txt"
+            def junitApiPath = "/Applications/Eclipse.app/Contents/Eclipse/plugins/junit-jupiter-api-5.10.2.jar"
+            def junitConsolePath = "/Applications/Eclipse.app/Contents/Eclipse/plugins/junit-platform-console-standalone-1.7.1.jar"
+            def classpath = "classes:lib/*:${junitApiPath}:${junitConsolePath}"
+            sh "java -cp '${classpath}' org.junit.platform.console.ConsoleLauncher --scan-classpath > test_results.txt"lasspath > test_results.txt"
           }
         }
       }
