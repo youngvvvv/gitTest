@@ -22,7 +22,8 @@ pipeline{
           }
         }
       }
-     post {
+    }
+    post {
         always {
           archiveArtifacts'test_results.txt'
         }
@@ -33,6 +34,4 @@ pipeline{
          echo'Build and test succeeded'
        }
       }
-  
-    }
 }
