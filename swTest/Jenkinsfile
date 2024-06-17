@@ -11,14 +11,16 @@ pipeline{
       }
       stage('Build') {
         steps {
-          sh 'javac -encoding UTF-8 -d classes swTest/src/**/*.java'
+          def classpath = "classes:lib/*:path/to/eclipse/plugins/junit-platform-console-standalone-1.7.1.jar"
+          sh "javac -encoding UTF-8 -cp ${classpath} -d classes swTest/src/**/*.java"
+       
         }
       }
       stage('Test'){
         steps {
           script{
-            def classpath = "classes;lib/;path/to/eclipse/plugins/junit-platform-console-standalone-1.7.1.jar"
-            bat 'java -cp classes;lib/; path/to/eclipse/plugins/junit-platform-console-standalone-1.7.1.jar org.junit.platform.console.ConsoleLauncher --scan-classpath > test_results.txt'
+           def classpath = "classes:lib/*:path/to/eclipse/plugins/junit-platform-console-standalone-1.7.1.jar"
+           sh "java -cp ${classpath} org.junit.platform.console.ConsoleLauncher --scan-classpath > test_results.txt"
           }
         }
       }
