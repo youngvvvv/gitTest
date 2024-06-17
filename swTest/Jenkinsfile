@@ -1,8 +1,10 @@
 pipeline{
   agent any
-  options {
-      skipStagesAfterUnstable()
-  }
+  
+   environment {
+        JAVA_OPTS = '-Dfile.encoding=UTF-8'
+    }
+
   stages {
       stage('Cehckout'){
         steps{
@@ -12,21 +14,19 @@ pipeline{
       stage('Build') {
         steps {
           script{
-             def junitApiPath = "/Applications/Eclipse.app/Contents/Eclipse/plugins/junit-jupiter-api-5.10.2.jar"
-             def junitConsolePath = "/Applications/Eclipse.app/Contents/Eclipse/plugins/junit-platform-console-standalone-1.7.1.jar"
-             def classpath = "classes:lib/*:${junitApiPath}:${junitConsolePath}"
-             sh "javac -encoding UTF-8 -cp '${classpath}' -d classes swTest/src/swTest/Book.java swTest/src/swTest/BookManager.java swTest/src/swTest/BookManagerTest.java swTest/src/swTest/JunitTest.java swTest/src/swTest/JunitTestTest.java swTest/src/swTest/test.java"
-                }
+             def junitClasspath = 'eclipse/plugins/junit-jupiter-api-5.7.1.jar:eclipse/plugins/junit-platform-console-standalone-1.7.1.jar'
+             sh 'mkdir -p classes'
+             sh "javac -encoding UTF-8 -cp ${junitClasspath} -d classes Mission2/src/*.java"
           }
         }
       
       stage('Test'){
         steps {
           script{
-            def junitApiPath = "/Applications/Eclipse.app/Contents/Eclipse/plugins/junit-jupiter-api-5.10.2.jar"
-            def junitConsolePath = "/Applications/Eclipse.app/Contents/Eclipse/plugins/junit-platform-console-standalone-1.7.1.jar"
-            def classpath = "classes:lib/*:${junitApiPath}:${junitConsolePath}"
-            sh "java -cp '${classpath}' org.junit.platform.console.ConsoleLauncher --scan-classpath > test_results.txt" 
+           // JUnit 5 테스트 실행
+                    def junitClasspath = 'classes:eclipse/plugins/junit-jupiter-api-5.7.1.jar:eclipse/plugins/junit-platform-console-standalone-1.7.1.jar'
+                    sh "java -Dfile.encoding=UTF-8 -cp ${junitClasspath} org.junit.platform.console.ConsoleLauncher --scan-classpath --classpath classes | tee test_results.txt"
+
           }
         }
       }
