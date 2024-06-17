@@ -110,6 +110,43 @@ public class BookManagerTest {
         // 검색 결과 출력
         System.out.println("검색 결과: " + book);
     }
+    @Test
+    public void testSearchPerformance() {
+        // 대량의 책을 추가합니다.
+        for (int i = 1; i <= 10000; i++) {
+            manager.addBook(new Book(i, "Title " + i, "Author " + i, 2000 + (i % 20)));
+        }
+
+        // 검색할 책 ID 설정
+        int searchId = 5000;
+
+        // 선형 검색 성능 테스트
+        long startTime = System.nanoTime();
+        Book linearSearchBook = manager.searchBook(searchId);
+        long endTime = System.nanoTime();
+        long linearSearchTime = endTime - startTime;
+        System.out.println("search 검색 시간: " + linearSearchTime + " ns");
+
+        // 이진 탐색 성능 테스트
+        startTime = System.nanoTime();
+        Book binarySearchBook = manager.search_bs(searchId);
+        endTime = System.nanoTime();
+        long binarySearchTime = endTime - startTime;
+        System.out.println("search_bs 시간: " + binarySearchTime + " ns");
+
+        // 검색 결과 검증
+        assertNotNull(linearSearchBook);
+        assertEquals(searchId, linearSearchBook.getId());
+        assertNotNull(binarySearchBook);
+        assertEquals(searchId, binarySearchBook.getId());
+
+        // 성능 비교 및 결과 출력
+        if (linearSearchTime < binarySearchTime) {
+            System.out.println("search()가 더 빠릅니다.");
+        } else {
+            System.out.println("search_bs()가 더 빠릅니다.");
+        }
+    }
 }
 
 
