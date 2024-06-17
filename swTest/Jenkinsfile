@@ -19,6 +19,7 @@ pipeline{
              sh "javac -encoding UTF-8 -cp ${junitClasspath} -d classes Mission2/src/*.java"
           }
         }
+      }
       
       stage('Test'){
         steps {
@@ -43,4 +44,4 @@ pipeline{
        }
       }
   }
-}
+
