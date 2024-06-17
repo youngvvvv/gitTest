@@ -26,7 +26,7 @@ pipeline{
             def junitApiPath = "/Applications/Eclipse.app/Contents/Eclipse/plugins/junit-jupiter-api-5.10.2.jar"
             def junitConsolePath = "/Applications/Eclipse.app/Contents/Eclipse/plugins/junit-platform-console-standalone-1.7.1.jar"
             def classpath = "classes:lib/*:${junitApiPath}:${junitConsolePath}"
-            sh "java -cp '${classpath}' org.junit.platform.console.ConsoleLauncher --scan-classpath > test_results.txt"lasspath > test_results.txt"
+            sh "java -cp '${classpath}' org.junit.platform.console.ConsoleLauncher --scan-classpath > test_results.txt" 
           }
         }
       }
